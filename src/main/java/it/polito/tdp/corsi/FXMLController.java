@@ -5,7 +5,10 @@
 package it.polito.tdp.corsi;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.corsi.model.Corso;
 import it.polito.tdp.corsi.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,7 +49,20 @@ public class FXMLController {
 
     @FXML
     void corsiPerPeriodo(ActionEvent event) {
+    	txtRisultato.clear();
+    	String periodo = txtPeriodo.getText();
+    	int periodoNumerico;
+    	try {
+    		periodoNumerico = Integer.parseInt(periodo);
+    	}catch(NumberFormatException e) {
+    		txtRisultato.setText("inserisci un periodo numerico");
+    		return;
+    	}
     	
+    	List<Corso> corsi = this.model.getCorsiByPeriodo(periodoNumerico);
+    	for(Corso c: corsi) {
+    		txtRisultato.appendText(c + "\n");
+    	}
     }
 
     @FXML
